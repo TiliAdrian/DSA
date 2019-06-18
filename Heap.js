@@ -28,6 +28,7 @@ class Heap {
       if (this.heap[i] === value) {
         return i;
       }
+      i++;
     }
     return -1;
   }
@@ -57,19 +58,42 @@ class Heap {
       }
     }
   }
+
+  parent(index) {
+    if (index > 1) {
+      return Math.floor((index - 1) / 2);
+    }
+    return 0;
+  }
+
+  search(value) {
+    var start = 0;
+    var nodes = 1;
+    while (start < this.count) {
+      start = nodes - 1;
+      var end = nodes + start;
+      var nr = 0;
+      while (start < this.count && start < end) {
+        if (value === this.heap[start]) {
+          return true;
+        }
+        if (
+          value > this.heap[this.parent(this.findIndex(this.heap[start]))] &&
+          value < this.heap[start]
+        ) {
+          nr++;
+        }
+        // console.log(this.findIndex(this.heap[start]));
+        start++;
+      }
+      if (nr === nodes) {
+        return false;
+      }
+      nodes = nodes * 2;
+    }
+
+    return false;
+  }
 }
 
-var a = new Heap();
-console.log(a);
-a.add(3);
-console.log(a);
-a.add(9);
-console.log(a);
-a.add(12);
-console.log(a);
-a.add(13);
-console.log(a);
-a.add(1);
-console.log(a);
-a.remove(1);
-console.log(a);
+module.exports = Heap;
