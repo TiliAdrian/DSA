@@ -51,7 +51,4 @@ class Trie {
   }
 }
 
-let a = new Trie();
-a.insert("Apple");
-console.log(a);
-console.log(a.search("Apple"));
+module.exports = Trie;
